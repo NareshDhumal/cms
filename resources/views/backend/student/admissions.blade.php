@@ -25,7 +25,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="content-header-right col-md-6 col-12 mb-md-0 bg-light">
+                <div class="content-header-right col-md-6 col-12 mb-md-0 ">
                     <div class="btn-group d-flex mb-3" role="group" aria-label="Button group with nested dropdown">
                         <div class="btn-group ms-lg-auto" role="group">
                             <div class="col col-sm-2 mx-2">

@@ -25,7 +25,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="content-header-right col-md-6 col-12 mb-md-0 bg-light">
+                <div class="content-header-right col-md-6 col-12 mb-md-0 ">
                     <div class="btn-group d-flex mb-3" role="group" aria-label="Button group with nested dropdown">
                         <div class="btn-group ms-lg-auto" role="group">
                             <div class="col col-sm-2 mx-2">
@@ -34,12 +34,17 @@
                             </a>
                         </div>
                     </div>
-                        <div class="col col-sm-2 mx-2">
-                            <select name="" id="" class='form-control' placeholder='Select Course'>
-                                <option value="">A</option>
-                                <option value="">B</option>
-                                <option value="">C</option>
-                            </select>
+                        <div class="col col-sm-2 mx-2" style='width:150px!important'>
+
+                        {{-- check if course selected or not --}}
+                        @php
+                        $selected_year = null;
+                            $student_session = Session('student_'.$student->student_id);
+                            if(isset($student_session['year_id']) && $student_session['year_id'] !='' ){
+                                $selected_year = $student_session['year_id'];
+                            }
+                        @endphp
+                            {{Form::select('student_course',$student_course, $selected_year ,['id'=>'student_course' , 'class'=>'form-control'])}}
                         </div>
 
                         <div class="col col-sm-2 mx-2">
@@ -72,6 +77,11 @@
                                             <h3>{{ $student->student_name }}  <span class="btn btn-sm btn-primary" align='bottom'>edit</span></h3>
 
                                             <p class='m-0'> Roll No :
+                                            @if(isset($student_session['roll_no']) && $student_session['roll_no'] !="")
+                                                {{ $student_session['roll_no'] }}
+                                                @else
+                                                --
+                                            @endif
 
                                             </p>
 
@@ -104,11 +114,15 @@
 
                                         <div class="col-md-3 px-3 text-right">
                                             <div class="col-sm-12 mx-1 mt-1 m2-1 float px-2 box_border">
-                                                <h5>Total Fees : 50,000.00 <h5>
+                                                <h5>Total Fees : @if(isset($student_session['total_fees']))
+                                                                {{$student_session['total_fees']}}
+                                                @endif <h5>
                                             </div>
 
                                             <div class="col-sm-12 mx-1 mt-1 m2-1 float px-2 box_border">
-                                                <h5>Paid Fees <h5>
+                                                <h5>Paid Fees :  @if(isset($student_session['paid_fees']))
+                                                                {{$student_session['paid_fees']}}
+                                                @endif  <h5>
                                             </div>
 
                                             <div class="col-sm-12 mx-1 mt-1 mb-1 float px-2 box_border">
