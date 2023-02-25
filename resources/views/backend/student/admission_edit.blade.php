@@ -25,7 +25,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="content-header-right col-md-6 col-12 mb-md-0 bg-light">
+                <div class="content-header-right col-md-6 col-12 mb-md-0">
                     <div class="btn-group d-flex mb-3" role="group" aria-label="Button group with nested dropdown">
                         <div class="btn-group ms-lg-auto" role="group">
                             <div class="col col-sm-2 mx-2">
@@ -45,7 +45,7 @@
                                 <div class="card-body card-dashboard">
                                     <h1 class='text-center'>Admissions</h1>
                                     @include('backend.includes.errors')
-                                    {{ Form::model(['url' => 'admin/students/admission/update', 'method'=>'post', 'enctype'=>'multipart/form-data']) }}
+                                    {{ Form::model($admission,['url' => 'admin/students/admission/update', 'method'=>'post', 'enctype'=>'multipart/form-data']) }}
                                     @csrf
                                     <div class="form-body">
                                         <div class="row">
@@ -53,7 +53,8 @@
                                                 <div class="form-group">
                                                     {{ Form::label('student_name', 'Student Name *') }}
                                                     {{ Form::text('student_name', $student->student_name, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Enter Full Name']) }}
-                                                    {{ Form::hidden('student_id', $student->student_id, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Enter Full Name']) }}
+                                                    {{ Form::hidden('student_admission_id', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Enter Full Name']) }}
+                                                    {{ Form::hidden('student_id', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Enter Full Name']) }}
                                                 </div>
                                             </div>
 
@@ -84,7 +85,6 @@
                                             <div class="col-md-12 col-12 text-center mt-1 mb-2">
                                                 {{ Form::submit('Save', ['class' => 'btn btn-primary mr-1 mb-1' , 'id'=>'frm1']) }}
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>

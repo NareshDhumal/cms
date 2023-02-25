@@ -1,0 +1,2 @@
+1) before delete admision check fee status
+2) student module routing and error messages
