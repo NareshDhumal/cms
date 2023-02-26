@@ -64,17 +64,17 @@
                                     <div class="row">
                                         <div class="col-md-2 mx-1 pt-2 text-center">
                                             @if (isset($student->picture) && $student->picture != '')
-                                                <img src="" class='rounded' alt="" height='120px'
+                                                <img src="{{ asset('public/uploads/students/picture/'.$student->student_id.'/'.$student->picture) }}" class='rounded' alt="" height='120px'
                                                     width='100px' align='center'>
                                             @else
                                                 <img src="{{ asset('public/backend_assets/images/user.jpg') }}"
                                                     class='rounded' alt="" height='110px' width='100px'
                                                     align='center'>
-                                                    <span class="btn btn-sm btn-primary" align='bottom'>edit</span>
+                                                   <a href="{{ route('admin.students.edit.photo',[$student->student_id])}}"> <span class="btn btn-sm btn-primary" align='bottom'>edit</span> </a>
                                             @endif
                                         </div>
                                         <div class="col-md-6 mx-1 ">
-                                            <h3>{{ $student->student_name }}  <span class="btn btn-sm btn-primary" align='bottom'>edit</span></h3>
+                                            <h3>{{ $student->student_name }} <a href="{{ route('admin.students.edit',[$student->student_id])}}"> <span class="btn btn-sm btn-primary" align='bottom'>edit</span></a></h3>
 
                                             <p class='m-0'> Roll No :
                                             @if(isset($student_session['roll_no']) && $student_session['roll_no'] !="")
@@ -108,15 +108,17 @@
                                                     {{ $student->parents_mobile_no }}
                                                 @endif
                                             </p>
-
-
                                         </div>
 
                                         <div class="col-md-3 px-3 text-right">
                                             <div class="col-sm-12 mx-1 mt-1 m2-1 float px-2 box_border">
-                                                <h5>Total Fees : @if(isset($student_session['total_fees']))
-                                                                {{$student_session['total_fees']}}
-                                                @endif <h5>
+                                                <h5>Total Fees :
+                                                 @if(isset($student_session['fees']))
+                                                        {{$student_session['fees']}}
+                                                        @else
+                                                        --
+                                                @endif
+                                                <h5>
                                             </div>
 
                                             <div class="col-sm-12 mx-1 mt-1 m2-1 float px-2 box_border">
@@ -163,9 +165,6 @@
                                         <div class="col-sm-2 col-12 mx-1 mt-1 text-center px-2 box_border">
                                             <h5>Exam Records <h5>
                                         </div>
-
-
-
                                     </div>
                                 </div>
                             </div>

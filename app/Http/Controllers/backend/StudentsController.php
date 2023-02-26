@@ -88,7 +88,7 @@ class StudentsController extends Controller
         //student course array
         $student_course = [0=>'Not Enrolled'];
         $last_course = [];
-        $session_data = ['student_id'=>$id, 'roll_no' => '', 'year_id'=>'', 'academic_year'=>'',  'batch_id'=>'', 'batch'=>'', 'total_fees'=>0, 'paid_fees'=>0, 'remain_fees'=>0 ];
+        $session_data = ['student_id'=>$id, 'roll_no' => '', 'year_id'=>'', 'academic_year'=>'',  'batch_id'=>'', 'batch'=>'', 'fees'=>0, 'paid_fees'=>0, 'remain_fees'=>0 ];
 
         $student = Students::with('admissions')->where('student_id', $id)->first();
         if ($student) {
@@ -131,6 +131,11 @@ class StudentsController extends Controller
            {
                $session_data['batch'] = $last_course->batches->batch_name;
            }
+
+           if(isset($last_course->fees) )
+           {
+               $session_data['fees'] = $last_course->fees;
+           }
            //put data in new session
        Session::put('student_'.$id, $session_data);
     }
@@ -142,30 +147,56 @@ class StudentsController extends Controller
         }
     }
 
+
+    public function edit_photo($id){
+        $student = Students::with('admissions')->where('student_id', $id)->first();
+        if($student){
+            return view('backend.student.student_photo',compact('student'));
+        }
+    }
+
+    public function update_photo(Request $request){
+       // dd($request->toArray());
+        $request->validate([
+            "profile_photo" => "required|mimes:jpeg,png,jpg",
+        ]);
+
+        $student = Students::with('admissions')->where('student_id', $request->student_id)->first();
+        if($student){
+            if ($request->has('profile_photo')) {
+                $location = public_path('uploads/students/picture/' . $student->student_id);
+
+                $picture = 'img_' . $student->student_id . '_' . date('his') . '.' . $request->file('profile_photo')->getClientOriginalExtension();
+                if ($request->profile_photo->move($location, $picture)) {
+                    $student->picture = $picture;
+                   if($student->save()){
+                    return redirect()->route('admin.students.profile',[$student->student_id])->with('success', 'Profile Picture Updated');
+                   }else{
+                    return redirect()->route('admin.students.edit.photo',[$student->student_id])->with('error', 'Failed to Update Profile Photo');
+                   }
+                }else{
+                    return redirect()->route('admin.students.edit.photo',[$student->student_id])->with('error', 'Failed to Upload Profile Photo');
+                }
+            }
+        }
+    }
+
     //Go to edit page
     public function edit($id)
     {
-        // if ($id != '' && $id != 0) {
-        //     $teacher = Teachers::with('education')->where('teacher_id', $id)->first();
-        //     if ($teacher) {
-        //         return view('backend.teacher.edit', compact('teacher'));
-        //     }
-        // }
+        $student = Students::with('admissions')->where('student_id', $id)->first();
+             if ($student) {
+                 return view('backend.student.edit_details', compact('student'));
+             }else{
+                return redirect()->route('admin.students')->with('error', 'Student Details Not Found');
+             }
     }
 
     //Update details
     public function update(Request $request)
     {
         // dd($request->all());
-        $teacher = Teachers::where('teacher_id', $request->teacher_id)->first();
-        if ($teacher) {
-            $teacher->fill($request->all());
-            if ($teacher->save()) {
-                return redirect()->route('admin.teachers.edit', [$teacher->teacher_id])->with('success', 'Teacher Details Has Been Updated');
-            }
-        } else {
-            return redirect()->route('admin.teachers.edit', [$request->teacher_id])->with('error', 'Failed to Update Teacher Details');
-        }
+
     }
 
     //update status
@@ -175,40 +206,7 @@ class StudentsController extends Controller
     }
 
 
-    //update education details
-    public function update_education(Request $request)
-    {
-    }
 
-
-
-
-    //update resume
-    public function update_resume(Request $request)
-    {
-
-    }
-
-    //update profile picture
-    public function update_picture(Request $request)
-    {
-
-    }
-
-    //function for show documents
-    public function show_documents($id){
-
-    }
-
-    //store documents
-    public function store_documents(Request $request)
-    {
-
-    }
-
-public function delete_document($id){
-
-}
 
 
 

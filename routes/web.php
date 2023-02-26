@@ -235,6 +235,13 @@ Route::post('/students/store', [StudentsController::class, 'store'])->name('admi
 Route::get('/students/delete/{id}', [StudentsController::class, 'delete'])->name('admin.students.delete');
 
 Route::get('/students/profile/{id}', [StudentsController::class, 'profile'])->name('admin.students.profile');
+Route::get('/students/profile/photo/{id}', [StudentsController::class, 'edit_photo'])->name('admin.students.edit.photo');
+Route::post('/students/profile/photo/update', [StudentsController::class, 'update_photo'])->name('admin.students.update.photo');
+//EDIT DETAILS
+ Route::get('/students/edit/{id}', [StudentsController::class, 'edit'])->name('admin.students.edit');
+ Route::post('/students/update', [StudentsController::class, 'update'])->name('admin.students.update');
+
+
 //admissions
 Route::get('/students/admissions/{id}', [StudentAdmissionsController::class, 'admissions'])->name('admin.students.admissions');
 Route::post('/students/admission/store', [StudentAdmissionsController::class, 'admission_store'])->name('admin.students.admissions.store');
@@ -243,8 +250,7 @@ Route::post('/students/admission/update', [StudentAdmissionsController::class, '
 Route::get('/students/admissions/delete/{id}', [StudentAdmissionsController::class, 'delete'])->name('admin.students.admissions.delete');
 
 
-// Route::get('/students/edit/{id}', [StudentsController::class, 'edit'])->name('admin.students.edit');
-// Route::post('/students/update', [StudentsController::class, 'update'])->name('admin.students.update');
+
 
 
 
