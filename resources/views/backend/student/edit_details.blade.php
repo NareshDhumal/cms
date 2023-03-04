@@ -44,7 +44,7 @@
                             <div class="card-content">
                                 <div class="card-body card-dashboard">
                                      @include('backend.includes.errors')
-                                    {{ Form::model($student,['url' => 'admin/students/store', 'method'=>'post', 'enctype'=>'multipart/form-data']) }}
+                                    {{ Form::model($student,['url' => 'admin/students/details/update', 'method'=>'post', 'enctype'=>'multipart/form-data']) }}
                                     @csrf
                                     <div class="form-body">
                                         <div class="row">

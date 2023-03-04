@@ -191,38 +191,83 @@
                                                 <hr>
                                                 <p>
                                                   Name of student :
+                                                   @if(isset($student->student_name))
+                                                    {{ $student->student_name }}
+                                                    @else
+                                                    --
+                                                  @endif
                                                 </p>
 
                                                 <p>
                                                     Mother Name :
+                                                    @if(isset($student->mother_name))
+                                                    {{ $student->mother_name }}
+                                                    @else
+                                                    --
+                                                    @endif
                                                   </p>
 
                                                   <p>
                                                     Father Name :
+                                                    @if(isset($student->father_name))
+                                                    {{ $student->father_name }}
+                                                    @else
+                                                    --
+                                                    @endif
                                                   </p>
 
                                                   <p>
                                                     email :
+                                                    @if(isset($student->email))
+                                                    {{ $student->email }}
+                                                    @else
+                                                    --
+                                                    @endif
                                                   </p>
 
                                                   <p>
                                                     Mobile No :
+                                                    @if(isset($student->mobile_no))
+                                                    {{ $student->mobile_no }}
+                                                    @else
+                                                    --
+                                                    @endif
                                                   </p>
 
                                                   <p>
                                                     Parents Mobile No :
+                                                     @if(isset($student->parents_mobile_no))
+                                                    {{ $student->parents_mobile_no }}
+                                                    @else
+                                                    --
+                                                    @endif
                                                   </p>
 
                                                   <p>
                                                     Father Occumaption :
+                                                     @if(isset($student->father_occupation))
+                                                    {{ $student->father_occupation }}
+                                                    @else
+                                                    --
+                                                    @endif
                                                   </p>
 
                                                   <p>
                                                     Mother Occumaption :
+                                                     @if(isset($student->mother_occupation))
+                                                    {{ $student->mother_occupation }}
+                                                    @else
+                                                    --
+                                                    @endif
                                                   </p>
 
                                                   <p>
                                                     Annual Income :
+                                                    @if(isset($student->income))
+                                                    {{ $student->income }}
+                                                    @else
+                                                    --
+                                                    @endif
                                                   </p>
                                             </div>
 
@@ -235,10 +280,11 @@
                                             </div>
 
                                             <div class="row  m-2 box_border_black">
-                                                <h5> Academic Details </h5>
+
+                                                <h5> Academic Details  <a href="{{ route('admin.students.academics',[$student->student_id])}}"> <span class="btn btn-sm btn-primary" align='bottom'>edit</span> </a>  </h5>
                                                 <hr>
                                                 <p>
-                                                    {{$student->address}}
+
                                                     print botton
                                                     transfer studet
                                                     365 report

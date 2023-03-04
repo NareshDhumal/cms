@@ -32,4 +32,8 @@ class Students extends Model
     public function admissions(){
         return $this->hasmany(StudentAdmissions::class, 'student_id','student_id')->with('academic_years','batches');
     }
+
+    public function academics(){
+        return $this->hasMany(StudentAcademics::class, 'student_id', 'student_id');
+    }
 }

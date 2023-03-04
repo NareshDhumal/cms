@@ -140,7 +140,7 @@ class StudentsController extends Controller
        Session::put('student_'.$id, $session_data);
     }
 
-
+//dd($student);
             return view('backend.student.profile', compact('student','student_course','last_course'));
         } else {
             return redirect()->route('admin.students')->with('error', 'Student Not Found.');
@@ -196,6 +196,29 @@ class StudentsController extends Controller
     public function update(Request $request)
     {
         // dd($request->all());
+        $request->validate([
+            'student_name'=>'required',
+            'father_name'=>'required',
+            'mother_name'=>'required',
+            'gender'=>'required',
+            'mobile_no'=>'required|digits:10',
+            'parents_mobile_no'=>'required',
+            'father_occupation'=>'required',
+            'mother_occupation'=>'required',
+            'income'=>'required',
+        ]);
+
+        $student = Students::where('student_id', $request->student_id)->first();
+        if($student){
+            $student->fill($request->all());
+            if($student->save()){
+                return redirect()->route('admin.students.profile', [$request->student_id])->with('success','Student Details Has Been Updated');
+            }else{
+                return redirect()->route('admin.students')->with('error','Student Not Found');
+            }
+        }
+        dd($student->toArray());
+
 
     }
 

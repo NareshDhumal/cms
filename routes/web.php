@@ -15,6 +15,7 @@ use App\Http\Controllers\backend\SubjectsController;
 use App\Http\Controllers\backend\TeacherController;
 use App\Http\Controllers\backend\StudentsController;
 use App\Http\Controllers\backend\StudentAdmissionsController;
+use App\Http\Controllers\backend\StudentsAcademicsController;
 
 
 use App\Http\Controllers\backend\LogController;
@@ -239,7 +240,7 @@ Route::get('/students/profile/photo/{id}', [StudentsController::class, 'edit_pho
 Route::post('/students/profile/photo/update', [StudentsController::class, 'update_photo'])->name('admin.students.update.photo');
 //EDIT DETAILS
  Route::get('/students/edit/{id}', [StudentsController::class, 'edit'])->name('admin.students.edit');
- Route::post('/students/update', [StudentsController::class, 'update'])->name('admin.students.update');
+ Route::post('/students/details/update', [StudentsController::class, 'update'])->name('admin.students.update');
 
 
 //admissions
@@ -249,6 +250,9 @@ Route::get('/students/admissions/edit/{id}', [StudentAdmissionsController::class
 Route::post('/students/admission/update', [StudentAdmissionsController::class, 'admission_update'])->name('admin.students.admissions.update');
 Route::get('/students/admissions/delete/{id}', [StudentAdmissionsController::class, 'delete'])->name('admin.students.admissions.delete');
 
+Route::get('/students/academics/{id}', [StudentsAcademicsController::class, 'add_academics'])->name('admin.students.academics');
+Route::post('/students/academics/store', [StudentsAcademicsController::class, 'academics_store'])->name('admin.students.academics.store');
+Route::get('/students/academics/delete/{id}', [StudentsAcademicsController::class, 'academics_delete'])->name('admin.students.academics.delete');
 
 
 
