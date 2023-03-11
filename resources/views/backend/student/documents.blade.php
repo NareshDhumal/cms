@@ -18,11 +18,11 @@
                                 </li>
 
                                 <li class="breadcrumb-item">
-                                    <a href="{{ route('admin.teachers') }}">Teachers</a>
+                                    <a href="{{ route('admin.students') }}">Students</a>
                                 </li>
 
                                 <li class="breadcrumb-item">
-                                    <a href="{{ route('admin.teachers.profile', [$teacher->teacher_id]) }}">Profile</a>
+                                    <a href="{{ route('admin.students.profile', [$student->student_id]) }}">Profile</a>
                                 </li>
 
                                 <li class="breadcrumb-item active">Documents</li>
@@ -34,7 +34,7 @@
                     <div class="btn-group d-flex mb-3" role="group" aria-label="Button group with nested dropdown">
                         <div class="btn-group ms-lg-auto" role="group">
                             <a class="btn btn-outline-primary"
-                                href="{{ route('admin.teachers.profile', [$teacher->teacher_id]) }}">
+                                href="{{ route('admin.students.profile', [$student->student_id]) }}">
                                 <i class="feather icon-arrow-left"></i> Back
                             </a>
                         </div>
@@ -47,9 +47,9 @@
                         <div class="card">
                             <div class="card-content">
                                 <div class="card-body card-dashboard">
-                                    <h5>{{$teacher->full_name}}</h5>
+                                    <h5>{{$student->student_name}}</h5>
 
-                                    {{ Form::model($teacher, ['url' => 'admin/teachers/documents/store', 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
+                                    {{ Form::model($student, ['url' => 'admin/students/documents/store', 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
                                     @csrf
                                     <div class="form-body">
                                         <div class="row">
@@ -65,7 +65,7 @@
                                                 <div class="form-group">
                                                     {{ Form::label('full_name', 'Select Picture *') }}
                                                     {{ Form::file('doc_file', ['class' => 'form-control', 'required' => true, 'placeholder' => 'Select Document']) }}
-                                                    {{ Form::hidden('teacher_id', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Select file']) }}
+                                                    {{ Form::hidden('student_id', null, ['class' => 'form-control', 'required' => true, 'placeholder' => 'Select file']) }}
                                                 </div>
                                             </div>
 
@@ -92,9 +92,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if (isset($teacher->documents) && count($teacher->documents) > 0)
+                                            @if (isset($student->documents) && count($student->documents) > 0)
                                                 @php $srno = 1; @endphp
-                                                @foreach ($teacher->documents as $data)
+                                                @foreach ($student->documents as $data)
                                                     <tr>
                                                         <td class="text-center">{{ $srno }}</td>
                                                         <td class="text-center">{{ $data->doc_name }}</td>
@@ -102,9 +102,9 @@
 
 
                                                         <td>
-                                                            <a href="{{asset('/public/uploads/teachers/documents/'.$data->teacher_id.'/'.$data->doc_file)}}" target='_new'> <span class="btn btn-info"> View</span> </a>
+                                                            <a href="{{asset('/public/uploads/students/documents/'.$data->student_id.'/'.$data->doc_file)}}" target='_new'> <span class="btn btn-info"> View</span> </a>
 
-                                                            <a href="{{ url('admin/teachers/documents/delete/' . $data->teacher_document_id) }}"
+                                                            <a href="{{ url('admin/students/documents/delete/' . $data->student_document_id) }}"
                                                                 class="btn btn-danger"
                                                                 onclick="return confirm('Do You Want to Delete Document ?')"><i
                                                                     class="feather icon-trash"></i></a>

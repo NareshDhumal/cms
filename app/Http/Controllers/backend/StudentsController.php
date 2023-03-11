@@ -90,7 +90,7 @@ class StudentsController extends Controller
         $last_course = [];
         $session_data = ['student_id'=>$id, 'roll_no' => '', 'year_id'=>'', 'academic_year'=>'',  'batch_id'=>'', 'batch'=>'', 'fees'=>0, 'paid_fees'=>0, 'remain_fees'=>0 ];
 
-        $student = Students::with('admissions')->where('student_id', $id)->first();
+        $student = Students::with('admissions','academics')->where('student_id', $id)->first();
         if ($student) {
 
                     //get student admission count

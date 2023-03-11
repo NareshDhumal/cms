@@ -36,4 +36,8 @@ class Students extends Model
     public function academics(){
         return $this->hasMany(StudentAcademics::class, 'student_id', 'student_id');
     }
+
+    public function documents(){
+        return $this->hasMany(StudentDocuments::class,  'student_id', 'student_id');
+    }
 }

@@ -16,6 +16,7 @@ use App\Http\Controllers\backend\TeacherController;
 use App\Http\Controllers\backend\StudentsController;
 use App\Http\Controllers\backend\StudentAdmissionsController;
 use App\Http\Controllers\backend\StudentsAcademicsController;
+use App\Http\Controllers\backend\StudentDocumentsController;
 
 
 use App\Http\Controllers\backend\LogController;
@@ -254,6 +255,10 @@ Route::get('/students/academics/{id}', [StudentsAcademicsController::class, 'add
 Route::post('/students/academics/store', [StudentsAcademicsController::class, 'academics_store'])->name('admin.students.academics.store');
 Route::get('/students/academics/delete/{id}', [StudentsAcademicsController::class, 'academics_delete'])->name('admin.students.academics.delete');
 
+//documents
+Route::get('/students/documents/{id}', [StudentDocumentsController::class, 'show_documents'])->name('admin.students.documents');
+Route::post('/students/documents/store', [StudentDocumentsController::class, 'store_documents'])->name('admin.students.documents.store');
+Route::get('/students/documents/delete/{id}', [StudentDocumentsController::class, 'delete_document'])->name('admin.students.documents.delete');
 
 
 
@@ -276,10 +281,10 @@ Route::get('/logs/user/logdetails',[LogController::class, 'userlogs'])->name('ad
 //ajax calls
 Route::get('/fetch/fees/{batch_id}',[BatchesController::class,'fetch_fees'])->name('fetch.batch');
 
-Route::get('/frgtpassword', [FrgtpassController::class,'frgtpassword'])->name('frgtpassword');
-Route::post('/sendotp', [FrgtpassController::class,'sendotp'])->name('sendotp.store');
-// Route::get('/sendotp{token}',[FrgtpassController::class,'signupsendotp'])->name('sendOTP');
-Route::get('/thankyou', [FrgtpassController::class, 'forthankyou'])->name('forthankyou');
-Route::get('resettoken/{token}', [FrgtpassController::class, 'showResetPasswordForm'])->name('resettoken');
+//Route::get('/frgtpassword', [FrgtpassController::class,'frgtpassword'])->name('frgtpassword');
+//Route::post('/sendotp', [FrgtpassController::class,'sendotp'])->name('sendotp.store');
+//// Route::get('/sendotp{token}',[FrgtpassController::class,'signupsendotp'])->name('sendOTP');
+//Route::get('/thankyou', [FrgtpassController::class, 'forthankyou'])->name('forthankyou');
+//Route::get('resettoken/{token}', [FrgtpassController::class, 'showResetPasswordForm'])->name('resettoken');
 
-Route::post('/changeforgotpassword', [FrgtpassController::class,'changeforgotpassword'])->name('changeforgotpassword.store');
+//Route::post('/changeforgotpassword', [FrgtpassController::class,'changeforgotpassword'])->name('changeforgotpassword.store');
