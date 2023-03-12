@@ -17,6 +17,7 @@ use App\Http\Controllers\backend\StudentsController;
 use App\Http\Controllers\backend\StudentAdmissionsController;
 use App\Http\Controllers\backend\StudentsAcademicsController;
 use App\Http\Controllers\backend\StudentDocumentsController;
+use App\Http\Controllers\backend\FessCollectionController;
 
 
 use App\Http\Controllers\backend\LogController;
@@ -262,6 +263,18 @@ Route::get('/students/documents/delete/{id}', [StudentDocumentsController::class
 
 
 
+//Manual Fee Collection
+Route::get('/student/fees', [FessCollectionController::class, 'index'])->name('admin.fees.collection');
+Route::get('/student/fees/add', [FessCollectionController::class, 'create'])->name('admin.fees.collection.create');
+Route::post('/student/fees/store', [FessCollectionController::class, 'store'])->name('admin.fees.collection.store');
+
+
+
+
+Route::get('/lectures', [StudentsController::class, 'index'])->name('admin.lectures');
+Route::get('/attendance', [StudentsController::class, 'index'])->name('admin.attendance');
+Route::get('/pay', [StudentsController::class, 'index'])->name('admin.payments');
+
 
 
 //logs
@@ -280,6 +293,10 @@ Route::get('/logs/user/logdetails',[LogController::class, 'userlogs'])->name('ad
 
 //ajax calls
 Route::get('/fetch/fees/{batch_id}',[BatchesController::class,'fetch_fees'])->name('fetch.batch');
+
+//AjaxFor Fees Collection
+Route::get('/fetch/student/admissions/{id}',[StudentAdmissionsController::class,'fetch_admissions'])->name('fetch.academics');
+Route::get('/fetch/student/admissions/fees/{id}',[StudentAdmissionsController::class,'fetch_admissions_fees'])->name('fetch.admission.fess');
 
 //Route::get('/frgtpassword', [FrgtpassController::class,'frgtpassword'])->name('frgtpassword');
 //Route::post('/sendotp', [FrgtpassController::class,'sendotp'])->name('sendotp.store');

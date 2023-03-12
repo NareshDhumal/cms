@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\backend\Students;
 use App\Models\backend\AcademicYears;
 use App\Models\backend\Batches;
+use App\Models\backend\FeesCollection;
 use App\Models\backend\StudentAdmissions;
 
 use Carbon\Carbon;
@@ -111,4 +112,46 @@ class StudentAdmissionsController extends Controller
         }
     }
 
+
+
+
+
+     /******AJAX Calls */
+    //****************/
+    public function fetch_admissions($id){
+        $admissions = StudentAdmissions::with('batches')->where('student_id',$id)->get();
+        echo "<option value=''>Select Roll No</option>";
+        if(isset($admissions) && count($admissions)>0){
+            foreach($admissions as $adm){
+                echo "<option value=".$adm->student_admission_id ." > ";
+                echo $adm->student_admission_id ;
+                if(isset($adm->batches['batch_name'])){
+                    echo " (".$adm->batches['batch_name'].") ";
+                }
+                echo " </option>";
+            }
+        }
+    }
+
+    //fetch fees and other details
+    function fetch_admissions_fees($id){
+        $fee = 0;
+        $paid_fee = 0;
+        $remain_fee = 0;
+        $admission = StudentAdmissions::where('student_admission_id',$id)->first();
+        if(isset($admission->total_fees)){
+            $fee = $admission->total_fees;
+        }
+
+        $fees_collected = FeesCollection::where('roll_no',$id)->sum('amount');
+        if(isset($fees_collected)){
+            $paid_fee = $fees_collected;
+        }
+
+        $remain_fee = (float)$fee + (float)$paid_fee;
+
+        return json_encode(['fees'=>$fee, 'paid_fees'=>$paid_fee, 'remain_fees'=>$remain_fee ]);
+    }
+    //****************/
+    /******AJAX Calls */
 }  //end of class

@@ -5,19 +5,18 @@ namespace App\Models\backend;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Support\Facades\DB;
 
-class StudentAcademics extends Model
-
+class FeesCollection extends Model
 {
-  //use SoftDeletes;
+     //use SoftDeletes;
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    use SoftDeletes;
-    protected $table = 'student_academics';
-    protected $primaryKey = 'student_acadmic_id';
+    protected $table = 'fees_collection';
+    protected $primaryKey = 'fees_collection_id';
 
     /**
      * Attributes that should be mass-assignable.
@@ -25,12 +24,10 @@ class StudentAcademics extends Model
      * @var array
      */
     protected $fillable = [
-        'student_id', 'exam', 'school_board', 'score', 'result', 'year'
+     'student_id', 'roll_no', 'amount', 'payment_method', 'reference_no', 'payment_date', 'is_online', 'transaction_id', 'status', 'is_cancelled', 'recieved_by', 'description'
     ];
 
-    public function student(){
-        return $this->hasOne(Students::class, 'student_id','student_id');
-    }
+
 
 
 }

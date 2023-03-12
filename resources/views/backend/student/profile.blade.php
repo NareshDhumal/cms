@@ -151,12 +151,14 @@ use Spatie\Permission\Models\Role;
                                         </a>
                                     </div>
 
-                                    <div class="col-sm-2 col-12 mx-1 mt-1  text-center px-2 box_border">
-                                        <h5>Attendance <h5>
+                                    <div class="col-sm-2 col-12 mx-1 mt-1 text-center px-2 box_border">
+                                        <a href="{{url('/')}}/admin/students/fees/{{$student->student_id}}">
+                                        <h5>Payments <h5>
+                                        </a>
                                     </div>
 
-                                    <div class="col-sm-2 col-12 mx-1 mt-1 text-center px-2 box_border">
-                                        <h5>Payments <h5>
+                                    <div class="col-sm-2 col-12 mx-1 mt-1  text-center px-2 box_border">
+                                        <h5>Attendance <h5>
                                     </div>
 
                                     <div class="col-sm-2 col-12 mx-1 mt-1 text-center px-2 box_border">
@@ -323,15 +325,50 @@ use Spatie\Permission\Models\Role;
                                         </div>
 
                                         {{-- Documents --}}
-                                        <div class="row basic-datatable details_box">
+                                        <div class="row basic-datatable document_details">
                                             <div class="col  m-2 box_border_black">
                                                 <h5 class='student_documents'> Documents <a href="{{ route('admin.students.documents',[$student->student_id])}}"> <span class="btn btn-sm btn-primary" align='bottom'>edit</span> </a>   </h5>
                                                 <hr>
-                                                <div class="student_documents_box">
-                                                    <p>
+                                                <div class="document_details_box">
+                                                    <div class="table-responsive">
+                                                        <table class="table zero-configuration table-bordered" id="tbl-datatable"
+                                                            style="white-space: nowrap;">
+                                                            <thead>
+                                                                <tr role="row" style="height: 0px;">
+                                                                    <th class="text-center sorting_asc"> Sr. No </th>
+
+                                                                    <th class="text-center sorting_asc" >Doc Name </th>
+                                                                    <th class="text-center sorting_asc">
+                                                                        Action
+                                                                    </th>
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @if (isset($student->documents) && count($student->documents) > 0)
+                                                                    @php $srno = 1; @endphp
+                                                                    @foreach ($student->documents as $data)
+                                                                        <tr>
+                                                                            <td class="text-center">{{ $srno }}</td>
+                                                                            <td class="text-center">{{ $data->doc_name }}</td>
+                                                                            <td class="text-center">{{ $data->doc_name }}</td>
 
 
-                                                    </p>
+                                                                            <td>
+                                                                                <a href="{{asset('/public/uploads/students/documents/'.$data->student_id.'/'.$data->doc_file)}}" target='_new'> <span class="btn btn-info"> View</span> </a>
+
+                                                                                <a href="{{ url('admin/students/documents/delete/' . $data->student_document_id) }}"
+                                                                                    class="btn btn-danger"
+                                                                                    onclick="return confirm('Do You Want to Delete Document ?')"><i
+                                                                                        class="feather icon-trash"></i></a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        @php $srno++; @endphp
+                                                                    @endforeach
+                                                                @endif
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -349,10 +386,15 @@ use Spatie\Permission\Models\Role;
 <script>
     $(document).ready(function() {
 
+        //hide show details boxes
+            //hide all boxes n page load
         $('.student_details_box').css('display', 'none');
         $('.address_details_box').css('display', 'none');
         $('.academic_details_box').css('display', 'none');
+        $('.document_details_box').css('display', 'none');
 
+        //show detail boxes on click event
+            //toggle
         $('.std_details').click(function() {
             $('.student_details_box').toggle('slow');
         });
@@ -365,7 +407,13 @@ use Spatie\Permission\Models\Role;
             $('.academic_details_box').toggle('slow');
         });
 
-    });
+        $('.document_details').click(function() {
+            $('.document_details_box').toggle('slow');
+        });
+
+
+    }); //end of Ready Function
+
 
 </script>
 @endsection
